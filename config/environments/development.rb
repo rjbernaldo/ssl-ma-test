@@ -38,4 +38,6 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  # Rails::Auth::ConfigBuilder.production(config, error_page: :debug)
+  # Rails::Auth::ConfigBuilder.development(config, development_credentials: { "Authorization" => "Basic Z2FyeS50ZXN0QHByb21pc2VwYXkuY29tOnByb21pc2VwYXk=" })
 end

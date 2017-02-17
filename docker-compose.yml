@@ -1,0 +1,50 @@
+version: '2'
+services:
+  db1:
+    image: postgres:9.3.13
+    ports:
+      - "5432:5432"
+
+  app1:
+    build: .
+    command: bash -c "bundle exec rails s -p 8080 -b '0.0.0.0' -P 8080ab"
+    environment:
+      - RAILS_ENV=development
+      - DATABASE_URL=postgres://postgres@db1:5432
+    stdin_open: true
+    tty: true
+    ports:
+      - "8080:8080"
+    links:
+      - db1
+    volumes:
+      - .:/myapp
+      - ./nginx/etc/nginx:/etc/nginx
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx/etc/nginx:/etc/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - app2
+
+  app2:
+    build: .
+    command: bash -c "bundle exec rails s -p 8081 -b '0.0.0.0' -P 8081ab"
+      # rm -f tmp/pids/server.pid && 
+    environment:
+      - RAILS_ENV=development
+      # - DATABASE_URL=postgres://postgres@db2:5433
+      - DATABASE_URL=postgres://postgres@db1:5432
+    stdin_open: true
+    tty: true
+    ports:
+      - "8081:8081"
+    links:
+      - db1
+    volumes:
+      - .:/myapp
+      - ./nginx/etc/nginx:/etc/nginx

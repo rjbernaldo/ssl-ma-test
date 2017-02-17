@@ -1,0 +1,24 @@
+---
+- resources:
+  - path: "/api/send_data"
+    method: POST
+    host: "localhost:8080"
+  # allow_claims: true
+  allow_all: true
+  # allow_x509_subject:
+  #   cn: app1
+# - resources:
+#   - path: "/api/receive_get_json"
+#     method: GET
+#   allow_x509_subject:
+#     cn: app1
+# - resources:
+#   - path: "/api/receive_get_blob"
+#     method: GET
+#   allow_x509_subject:
+#     cn: app1
+# - resources:
+#   - path: "/api/receive_post_json"
+#     method: POST
+#   allow_x509_subject:
+#     cn: app1
